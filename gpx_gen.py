@@ -33,7 +33,7 @@ def get_tracks(root, verbose=False):
     return tracks, len(tracks)
 
 def add_track(root, track, verbose=False):
-    root.append(track)
+    root.append(et.fromstring(et.tostring(track)))
 
 def rename_track(root, track, name, verbose=False):
     trk_name = track.findall("./{http://www.topografix.com/GPX/1/1}name")
@@ -51,8 +51,6 @@ if __name__ == "__main__":
     output_file = "to_work_out.gpx"
 
     ns = "http://www.topografix.com/GPX/1/1"
-    day = date.today()
-
 
     tree = et.parse(input_file)
     et.register_namespace('', ns)
@@ -74,33 +72,21 @@ if __name__ == "__main__":
     # FOR TEST
     tracks, nb_tracks = get_tracks(root, True)
 
-    # save changes
-    tree.write(output_file, xml_declaration=True, encoding='utf-8')
-    tree = et.parse(output_file)
-    root = tree.getroot()
-
     # rename the "way back from work" track in ffrom_work
     tracks, nb_tracks = get_tracks(root, True)
     rename_track(root, tracks[-1], "from_work", True)
+
+    # FOR TEST
+    day = date.today()
 
     # replace the date on the two tracks (to_work and from_work)
     replace_track_date(tracks[0], day)
     replace_track_date(tracks[1], day)
 
-    # save changes
-    tree.write(output_file, xml_declaration=True, encoding='utf-8')
-    tree = et.parse(output_file)
-    root = tree.getroot()
-
     # if more than one day, copy the two tracks
     tracks, nb_tracks = get_tracks(root, True)
     add_track(root, tracks[0])
     add_track(root, tracks[1])
-
-    # save changes
-    tree.write(output_file, xml_declaration=True, encoding='utf-8')
-    tree = et.parse(output_file)
-    root = tree.getroot()
 
     # FOR TEST
     day = day + timedelta(days=1)
@@ -128,7 +114,9 @@ if __name__ == "__main__":
     #print root.attrib.get('xmlns')
     """
 
+    # FOR TEST
     print et.tostring(root)
 
+    # save to output file
     tree.write(output_file, xml_declaration=True, encoding='utf-8')
 
