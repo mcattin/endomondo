@@ -7,8 +7,9 @@
 
 
 import sys
-from datetime import date, timedelta
+from datetime import *
 import xml.etree.ElementTree as et
+
 
 def replace_track_date(track, new_date, verbose=False):
     # Search for all "time" tags
@@ -24,6 +25,7 @@ def replace_track_date(track, new_date, verbose=False):
         if verbose==True:
             print("Found date:%s replaced by:%s"%(old_date, new_date))
 
+
 def get_tracks(root, verbose=False):
     tracks = root.findall(".//{http://www.topografix.com/GPX/1/1}trk")
     if verbose==True:
@@ -32,8 +34,10 @@ def get_tracks(root, verbose=False):
             print track
     return tracks, len(tracks)
 
+
 def add_track(root, track, verbose=False):
     root.append(et.fromstring(et.tostring(track)))
+
 
 def rename_track(root, track, name, verbose=False):
     trk_name = track.findall("./{http://www.topografix.com/GPX/1/1}name")
@@ -49,6 +53,9 @@ if __name__ == "__main__":
 
     input_file = "to_work.gpx"
     output_file = "to_work_out.gpx"
+
+    start_date = datetime.strptime("2013-02-04", "%Y-%m-%d")
+    end_date   = datetime.strptime("2013-02-08", "%Y-%m-%d")
 
     ns = "http://www.topografix.com/GPX/1/1"
 
@@ -77,31 +84,28 @@ if __name__ == "__main__":
     rename_track(root, tracks[-1], "from_work", True)
 
     # FOR TEST
-    day = date.today()
+    day = start_date
+    print day
 
     # replace the date on the two tracks (to_work and from_work)
     replace_track_date(tracks[0], day)
     replace_track_date(tracks[1], day)
 
     # if more than one day, copy the two tracks
-    tracks, nb_tracks = get_tracks(root, True)
-    add_track(root, tracks[0])
-    add_track(root, tracks[1])
+    if end_date != start_date:
+        while day < end_date:
+            day = day + timedelta(days=1)
 
-    # FOR TEST
-    day = day + timedelta(days=1)
+            tracks, nb_tracks = get_tracks(root, True)
+            add_track(root, tracks[0])
+            add_track(root, tracks[1])
 
-    # replace the date on the copied tracks
-    tracks, nb_tracks = get_tracks(root, True)
-    replace_track_date(tracks[-2], day)
-    replace_track_date(tracks[-1], day)
+            # replace the date on the copied tracks
+            tracks, nb_tracks = get_tracks(root, True)
+            replace_track_date(tracks[-2], day)
+            replace_track_date(tracks[-1], day)
 
 
-    """
-    for track in root.getiterator(trk_tag):
-        track = replace_date(track, day , False)
-        day = day + timedelta(days=1)
-    """
     """
     #print root.nsmap
     #print root
