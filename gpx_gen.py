@@ -52,21 +52,26 @@ if __name__ == "__main__":
 
 
     input_file = "to_work.gpx"
+    input_file_2 = "from_work.gpx"
     output_file = "to_work_out.gpx"
 
     start_date = datetime.strptime("2013-02-04", "%Y-%m-%d")
-    end_date   = datetime.strptime("2013-02-08", "%Y-%m-%d")
+    end_date   = datetime.strptime("2013-02-12", "%Y-%m-%d")
+    start_date = start_date.date()
+    end_date = end_date.date()
 
     ns = "http://www.topografix.com/GPX/1/1"
 
     tree = et.parse(input_file)
+    tree_2 = et.parse(input_file_2)
     et.register_namespace('', ns)
     root = tree.getroot()
+    root_2 = tree_2.getroot()
 
-    trk_tag = str(et.QName(ns, "trk"))
+    #trk_tag = str(et.QName(ns, "trk"))
 
     # get tracks
-    tracks, nb_tracks = get_tracks(root, True)
+    tracks, nb_tracks = get_tracks(root_2, True)
 
     # input file must have only 1 track
     if nb_tracks == 1:
@@ -79,9 +84,9 @@ if __name__ == "__main__":
     # FOR TEST
     tracks, nb_tracks = get_tracks(root, True)
 
-    # rename the "way back from work" track in ffrom_work
+    # rename the "way back from work" track in from_work
     tracks, nb_tracks = get_tracks(root, True)
-    rename_track(root, tracks[-1], "from_work", True)
+    #rename_track(root, tracks[-1], "from_work", True)
 
     # FOR TEST
     day = start_date
@@ -95,6 +100,12 @@ if __name__ == "__main__":
     if end_date != start_date:
         while day < end_date:
             day = day + timedelta(days=1)
+
+            print day, day.weekday()
+
+            if day.weekday() > 4:
+                print("It's weekend")
+                continue
 
             tracks, nb_tracks = get_tracks(root, True)
             add_track(root, tracks[0])
