@@ -13,7 +13,7 @@ import xml.etree.ElementTree as et
 
 def replace_track_date(track, new_date, verbose=False):
     # Search for all "time" tags
-    times = track.findall(".//{http://www.topografix.com/GPX/1/1}time")
+    times = track.findall(".//{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Time")
     if verbose==True:
         print("Found %d tags"%(len(times)))
     # Format new date
@@ -27,7 +27,7 @@ def replace_track_date(track, new_date, verbose=False):
 
 
 def get_tracks(root, verbose=False):
-    tracks = root.findall(".//{http://www.topografix.com/GPX/1/1}trk")
+    tracks = root.findall(".//{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Track")
     if verbose==True:
         print("Number of track(s): %d"%(len(tracks)))
         for track in tracks:
@@ -51,27 +51,30 @@ def rename_track(root, track, name, verbose=False):
 if __name__ == "__main__":
 
 
-    input_file = "to_work.gpx"
-    input_file_2 = "from_work.gpx"
-    output_file = "to_work_out.gpx"
+    input_file = "to_work.tcx"
+    input_file_2 = "from_work.tcx"
+    output_file = "to_work_out.tcx"
 
     start_date = datetime.strptime("2013-02-04", "%Y-%m-%d")
     end_date   = datetime.strptime("2013-02-12", "%Y-%m-%d")
     start_date = start_date.date()
     end_date = end_date.date()
 
-    ns = "http://www.topografix.com/GPX/1/1"
+    #ns = "http://www.topografix.com/GPX/1/1"
+    ns = "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2"
 
     tree = et.parse(input_file)
-    tree_2 = et.parse(input_file_2)
+    #tree_2 = et.parse(input_file_2)
     et.register_namespace('', ns)
     root = tree.getroot()
-    root_2 = tree_2.getroot()
+    #root_2 = tree_2.getroot()
+
+    print et.tostring(root)
 
     #trk_tag = str(et.QName(ns, "trk"))
 
     # get tracks
-    tracks, nb_tracks = get_tracks(root_2, True)
+    tracks, nb_tracks = get_tracks(root, True)
 
     # input file must have only 1 track
     if nb_tracks == 1:

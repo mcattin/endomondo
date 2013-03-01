@@ -32,6 +32,9 @@
     <property name="text">
      <string>Same as track to work</string>
     </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="Line" name="line">
     <property name="geometry">
@@ -338,6 +341,9 @@
       <widget class="QCheckBox" name="RemoveWeekendsCheckBox">
        <property name="text">
         <string>Remove weekends</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

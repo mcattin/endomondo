@@ -61,13 +61,16 @@ def clearList():
 def delDay():
     print("Delete Day")
 
-def replace_track_date(track, new_date, verbose=False):
-    # Search for all "time" tags
-    times = track.findall(".//{http://www.topografix.com/GPX/1/1}time")
-    if verbose==True:
-        print("Found %d tags"%(len(times)))
+def replace_lap_date(lap, new_date, verbose=False):
     # Format new date
     new_date = new_date.strftime("%Y-%m-%d")
+    # Replace Lap tag StartTime
+    old_date, old_time = lap.get("StartTime").split('T')
+    lap.set("StartTime", new_date+"T"+old_time)
+    # Search for all "time" tags
+    times = lap.findall(".//{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Time")
+    if verbose==True:
+        print("Found %d tags"%(len(times)))
     # Loop through "time" tags and replace the date
     for time in times:
         old_date, old_time = time.text.split('T')
@@ -75,30 +78,43 @@ def replace_track_date(track, new_date, verbose=False):
         if verbose==True:
             print("Found date:%s replaced by:%s"%(old_date, new_date))
 
-def get_tracks(root, verbose=False):
-    tracks = root.findall(".//{http://www.topografix.com/GPX/1/1}trk")
+def get_laps(root, verbose=False):
+    laps = root.findall(".//{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Lap")
     if verbose==True:
-        print("Number of track(s): %d"%(len(tracks)))
-        for track in tracks:
-            print track
-    return tracks, len(tracks)
+        print("Number of lap(s): %d"%(len(laps)))
+        for lap in laps:
+            print "Lap : ", lap
+    return laps, len(laps)
 
-def add_track(root, track, verbose=False):
-    root.append(et.fromstring(et.tostring(track)))
-
-def rename_track(root, track, name, verbose=False):
-    trk_name = track.findall("./{http://www.topografix.com/GPX/1/1}name")
-    trk_text = track.findall(".//{http://www.topografix.com/GPX/1/1}text")
+def get_activity(root, verbose=False):
+    activity = root.findall(".//{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Activity")
     if verbose==True:
-        print("Track name, old: %s, new: %s"%(trk_name[0].text, name))
-    trk_name[0].text = name
-    trk_text[0].text = name
+        print("Number of activity: %d"%(len(activity)))
+        for activ in activity:
+            print "Activity : ", activity
+    return activity, len(activity)
+
+def get_activities(root, verbose=False):
+    activities = root.findall(".//{http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2}Activities")
+    if verbose==True:
+        print "Activities : ", activities
+    return activities[0]
+
+def add_lap(activity, lap, verbose=False):
+    if verbose==True:
+        print "Adding one lap!"
+    activity.append(et.fromstring(et.tostring(lap)))
+
+def add_activity(activities, activity, verbose=False):
+    if verbose==True:
+        print "Adding one activity!"
+    activities.append(et.fromstring(et.tostring(activity)))
 
 def check_file(f):
     ok = 0
-    if f == "" or f[-4:] != ".gpx":
-        print("Enter a .gpx file")
-        QMessageBox.warning(m, 'Message Title', 'Please enter a .gpx file', QMessageBox.Ok)
+    if f == "" or f[-4:] != ".tcx":
+        print("Enter a .tcx file")
+        QMessageBox.warning(m, 'Message Title', 'Please enter a .tcx file', QMessageBox.Ok)
         ok = -1
     return ok
 
@@ -119,7 +135,8 @@ def generateGpx():
 
     ok = 0
     ok += check_file(f_to_work)
-    ok += check_file(f_from_work)
+    if not(same_track):
+        ok += check_file(f_from_work)
     ok += check_file(f_out)
     if ok < 0:
         return
@@ -139,42 +156,43 @@ def generateGpx():
     print("%d days to remove"%len(days_to_remove))
 
     # xml name space
-    ns = "http://www.topografix.com/GPX/1/1"
+    ns = "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2"
     et.register_namespace('', ns)
 
     # Parse to_work file, also used to build the output file
     tree = et.parse(f_to_work)
     root = tree.getroot()
 
-    # Parse from_work file
-    tree_2 = et.parse(f_from_work)
-    root_2 = tree_2.getroot()
-
     if same_track:
-        tracks, nb_tracks = get_tracks(root, False)
+        laps, nb_laps = get_laps(root, False)
     else:
-        tracks, nb_tracks = get_tracks(root_2, False)
+        # Parse from_work file
+        tree_2 = et.parse(f_from_work)
+        root_2 = tree_2.getroot()
+        laps, nb_laps = get_laps(root_2, False)
 
-    # Input file must have only 1 track
-    if nb_tracks == 1:
+    # Input file must have only 1 lap
+    if nb_laps == 1:
         # Add the way back from work
-        add_track(root, tracks[0])
+        activity, nb_activity = get_activity(root, False)
+        add_lap(activity[0], laps[0], False)
     else:
-        print("Input file MUST have only one track! Your file has %d tracks."%nb_tracks)
+        print("Input file MUST have only one lap! Your file has %d laps."%nb_laps)
+        return
 
-    if same_track:
+    #if same_track:
         # rename the "way back from work" track in from_work
-        tracks, nb_tracks = get_tracks(root, False)
-        rename_track(root, tracks[-1], "from_work", False)
+        #tracks, nb_tracks = get_tracks(root, False)
+        #rename_track(root, tracks[-1], "from_work", False)
 
-    # replace the date on the two tracks (to_work and from_work)
-    tracks, nb_tracks = get_tracks(root, False)
+    # replace the date on the two laps (to_work and from_work)
+    laps, nb_laps = get_laps(root, False)
     day = start_date
     print day," : KEEP"
-    replace_track_date(tracks[0], day)
-    replace_track_date(tracks[1], day)
+    replace_lap_date(laps[0], day)
+    replace_lap_date(laps[1], day)
 
-    # if more than one day, copy the two tracks
+    # if more than one day, copy the two laps
     if end_date != start_date:
         while day < end_date:
             day = day + timedelta(days=1)
@@ -188,14 +206,14 @@ def generateGpx():
                 continue
 
             print day," : KEEP"
-            tracks, nb_tracks = get_tracks(root, False)
-            add_track(root, tracks[0])
-            add_track(root, tracks[1])
+            activities= get_activities(root, False)
+            activity, nb_activity = get_activity(root, False)
+            add_activity(activities, activity[0])
 
-            # replace the date on the copied tracks
-            tracks, nb_tracks = get_tracks(root, False)
-            replace_track_date(tracks[-2], day)
-            replace_track_date(tracks[-1], day)
+            # replace the date of the laps on the copied activity
+            laps, nb_laps = get_laps(root, False)
+            replace_lap_date(laps[-2], day)
+            replace_lap_date(laps[-1], day)
 
     # save to output file
     tree.write(f_out, xml_declaration=True, encoding='utf-8')
@@ -208,7 +226,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     m = MainWindow()
     m.show()
-    m.setWindowTitle("GPXgen")
+    m.setWindowTitle("TCXgen")
     m.setFixedSize(661,548)
 
     # Initialize display fields
@@ -216,9 +234,10 @@ if __name__ == "__main__":
     m.EndDateEdit.setDate(date.today())
     m.RemoveDateEdit.setDate(date.today())
     m.statusbar.showMessage("Designed by: mcattin")
-    m.ToWorkFileEdit.setText(findFileInCurrentDir("to_work.gpx"))
-    m.FromWorkFileEdit.setText(findFileInCurrentDir("from_work.gpx"))
-    m.OutputFileEdit.setText(findFileInCurrentDir("out.gpx"))
+    m.ToWorkFileEdit.setText(findFileInCurrentDir("to_work.tcx"))
+    m.FromWorkFileEdit.setText(findFileInCurrentDir("from_work.tcx"))
+    m.OutputFileEdit.setText(findFileInCurrentDir("out.tcx"))
+    handleSameTrackClicked()
 
     # Connect events to callback functions
     m.ToWorkButton.clicked.connect(selectToWorkFile)
