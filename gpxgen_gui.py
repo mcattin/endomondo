@@ -173,26 +173,21 @@ def generateGpx():
 
     # Input file must have only 1 lap
     if nb_laps == 1:
-        # Add the way back from work
+        # Add the way back from work -> new lap
         activity, nb_activity = get_activity(root, False)
         add_lap(activity[0], laps[0], False)
     else:
         print("Input file MUST have only one lap! Your file has %d laps."%nb_laps)
         return
 
-    #if same_track:
-        # rename the "way back from work" track in from_work
-        #tracks, nb_tracks = get_tracks(root, False)
-        #rename_track(root, tracks[-1], "from_work", False)
-
-    # replace the date on the two laps (to_work and from_work)
+    # replace the date on the two laps
     laps, nb_laps = get_laps(root, False)
     day = start_date
     print day," : KEEP"
     replace_lap_date(laps[0], day)
     replace_lap_date(laps[1], day)
 
-    # if more than one day, copy the two laps
+    # if more than one day, copy the activity
     if end_date != start_date:
         while day < end_date:
             day = day + timedelta(days=1)
