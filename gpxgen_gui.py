@@ -98,6 +98,7 @@ def check_file(f):
     ok = 0
     if f == "" or f[-4:] != ".gpx":
         print("Enter a .gpx file")
+        QMessageBox.warning(m, 'Message Title', 'Please enter a .gpx file', QMessageBox.Ok)
         ok = -1
     return ok
 
@@ -111,15 +112,10 @@ def generateGpx():
     remove_weekends = bool(m.RemoveWeekendsCheckBox.checkState())
     days_to_remove = m.DayToRemoveList.findItems("*", PyQt4.QtCore.Qt.MatchWildcard)
 
-    print f_to_work
-    print f_from_work
-    print same_track
-    print f_out
-    print start_date
-    print end_date
-    print remove_weekends
-    print("%d days to remove"%len(days_to_remove))
-    print days_to_remove
+    print "track to work input file: ",f_to_work
+    print "track from work input file: ",f_from_work
+    print "from work same track as to work: ",same_track
+    print "output file: ",f_out
 
     ok = 0
     ok += check_file(f_to_work)
@@ -131,10 +127,16 @@ def generateGpx():
     # Convert Qdate in normal date
     start_date = start_date.toPyDate()
     end_date = end_date.toPyDate()
-    #start_date = start_date.strftime("%Y-%m-%d")
-    #end_date = end_date.strftime("%Y-%m-%d")
-    print start_date
-    print end_date
+    print "start date: ",start_date
+    print "end date  : ",end_date
+    print "remove weekends from date range :",remove_weekends
+
+    # Convert list items in date
+    remove_date = []
+    for d in days_to_remove:
+        remove_date.append(datetime.strptime(str(d.text()), "%m-%d-%Y"))
+    remove_date = [remove_date[i].date() for i in range(len(remove_date))]
+    print("%d days to remove"%len(days_to_remove))
 
     # xml name space
     ns = "http://www.topografix.com/GPX/1/1"
@@ -166,7 +168,9 @@ def generateGpx():
         rename_track(root, tracks[-1], "from_work", False)
 
     # replace the date on the two tracks (to_work and from_work)
+    tracks, nb_tracks = get_tracks(root, False)
     day = start_date
+    print day," : KEEP"
     replace_track_date(tracks[0], day)
     replace_track_date(tracks[1], day)
 
@@ -175,11 +179,15 @@ def generateGpx():
         while day < end_date:
             day = day + timedelta(days=1)
 
-            print day, day.weekday()
-
             if day.weekday() > 4 and remove_weekends:
-                print("Weekend")
+                print day," : REMOVE (weekend day)"
                 continue
+
+            if day in remove_date:
+                print day," : REMOVE"
+                continue
+
+            print day," : KEEP"
             tracks, nb_tracks = get_tracks(root, False)
             add_track(root, tracks[0])
             add_track(root, tracks[1])
@@ -192,6 +200,8 @@ def generateGpx():
     # save to output file
     tree.write(f_out, xml_declaration=True, encoding='utf-8')
 
+    print("Output file generated!")
+
 
 if __name__ == "__main__":
 
@@ -199,6 +209,7 @@ if __name__ == "__main__":
     m = MainWindow()
     m.show()
     m.setWindowTitle("GPXgen")
+    m.setFixedSize(661,548)
 
     # Initialize display fields
     m.StartDateEdit.setDate(date.today())
@@ -217,7 +228,6 @@ if __name__ == "__main__":
     m.SameTrackCheckBox.stateChanged.connect(handleSameTrackClicked)
     m.AddDayButton.clicked.connect(addDayToList)
     m.ClearListButton.clicked.connect(clearList)
-    
 
     # Starts Qt applic
     app.exec_()

@@ -6,130 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>614</height>
+    <width>661</width>
+    <height>548</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>gpxgen</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QDateEdit" name="StartDateEdit">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>160</y>
-      <width>110</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="displayFormat">
-     <string>MM-dd-yyyy</string>
-    </property>
-    <property name="calendarPopup">
-     <bool>true</bool>
-    </property>
-    <property name="date">
-     <date>
-      <year>2000</year>
-      <month>1</month>
-      <day>1</day>
-     </date>
-    </property>
-   </widget>
-   <widget class="QLabel" name="StartDateLabel">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>160</y>
-      <width>71</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start date:</string>
-    </property>
-   </widget>
-   <widget class="QDateEdit" name="EndDateEdit">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>160</y>
-      <width>110</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="displayFormat">
-     <string>MM-dd-yyyy</string>
-    </property>
-    <property name="calendarPopup">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="EndDateLabel">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>160</y>
-      <width>71</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>End date:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="ToWorkFileEdit">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>20</y>
-      <width>351</width>
-      <height>27</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ToWorkLabel">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>20</y>
-      <width>141</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Track to work (.gpx):</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="FromWorkLabel">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>70</y>
-      <width>151</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Track from work (.gpx):</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="FromWorkFileEdit">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>70</y>
-      <width>351</width>
-      <height>27</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="SameTrackCheckBox">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>100</y>
+      <x>30</x>
+      <y>70</y>
       <width>171</width>
       <height>22</height>
      </rect>
@@ -138,100 +33,12 @@
      <string>Same as track to work</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="GenerateButton">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>550</y>
-      <width>91</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Generate</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="OutputFileEdit">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>480</y>
-      <width>351</width>
-      <height>27</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="OutputLabel">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>480</y>
-      <width>121</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Output file name:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="RemoveDayLabel">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>220</y>
-      <width>291</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Day(s) to remove from the selected period:</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ToWorkButton">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>20</y>
-      <width>31</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="FromWorkButton">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>70</y>
-      <width>31</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="OutputButton">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>480</y>
-      <width>31</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>520</y>
-      <width>501</width>
+      <x>10</x>
+      <y>450</y>
+      <width>641</width>
       <height>16</height>
      </rect>
     </property>
@@ -239,24 +46,11 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QCheckBox" name="RemoveWeekendsCheckBox">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>220</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Remove weekends</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="AddDayButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>260</y>
+      <x>360</x>
+      <y>200</y>
       <width>88</width>
       <height>27</height>
      </rect>
@@ -269,26 +63,20 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>250</y>
-      <width>151</width>
-      <height>192</height>
+      <y>200</y>
+      <width>111</width>
+      <height>201</height>
      </rect>
     </property>
    </widget>
    <widget class="QDateEdit" name="RemoveDateEdit">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>260</y>
+      <x>250</x>
+      <y>200</y>
       <width>110</width>
       <height>27</height>
      </rect>
-    </property>
-    <property name="displayFormat">
-     <string>MM-dd-yyyy</string>
-    </property>
-    <property name="calendarPopup">
-     <bool>true</bool>
     </property>
     <property name="date">
      <date>
@@ -297,12 +85,18 @@
       <day>1</day>
      </date>
     </property>
+    <property name="displayFormat">
+     <string>MM-dd-yyyy</string>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="ClearListButton">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>410</y>
+      <x>250</x>
+      <y>370</y>
       <width>88</width>
       <height>27</height>
      </rect>
@@ -310,6 +104,285 @@
     <property name="text">
      <string>Clear list</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>470</y>
+      <width>641</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="GenerateButton">
+       <property name="text">
+        <string>Generate</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>641</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="ToWorkLabel">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Track to work (.gpx):</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ToWorkFileEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ToWorkButton">
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>641</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="FromWorkLabel">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Track from work (.gpx):</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="FromWorkFileEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="FromWorkButton">
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>441</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="StartDateLabel">
+       <property name="text">
+        <string>Start date:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateEdit" name="StartDateEdit">
+       <property name="date">
+        <date>
+         <year>2000</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+       <property name="displayFormat">
+        <string>MM-dd-yyyy</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="EndDateLabel">
+       <property name="text">
+        <string>End date:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateEdit" name="EndDateEdit">
+       <property name="displayFormat">
+        <string>MM-dd-yyyy</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>160</y>
+      <width>441</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="RemoveDayLabel">
+       <property name="text">
+        <string>Day(s) to remove from the selected period:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="RemoveWeekendsCheckBox">
+       <property name="text">
+        <string>Remove weekends</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>420</y>
+      <width>641</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="OutputLabel">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Output file name:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="OutputFileEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="OutputButton">
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
