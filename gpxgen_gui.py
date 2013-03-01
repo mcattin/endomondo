@@ -20,9 +20,9 @@ import xml.etree.ElementTree as et
 FormClass = PyQt4.uic.loadUiType('gpxgen_gui.ui')[0]
 
 class MainWindow(QMainWindow, FormClass):
-	def __init__(self):
-		super(MainWindow, self).__init__()
-		self.setupUi(self)
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.setupUi(self)
 
 def selectToWorkFile():
     m.ToWorkFileEdit.setText(QFileDialog.getOpenFileName())
@@ -51,8 +51,15 @@ def findFileInCurrentDir(f_to_find):
             return f
     return ""
 
-def addDayWidget():
-    m.layout.addWidget(QDateEdit())
+def addDayToList():
+    date_to_add = m.RemoveDateEdit.date()
+    m.DayToRemoveList.addItem(date_to_add.toString("MM-dd-yyyy"))
+
+def clearList():
+    m.DayToRemoveList.clear()
+
+def delDay():
+    print("Delete Day")
 
 def replace_track_date(track, new_date, verbose=False):
     # Search for all "time" tags
@@ -102,6 +109,7 @@ def generateGpx():
     start_date = m.StartDateEdit.date()
     end_date = m.EndDateEdit.date()
     remove_weekends = bool(m.RemoveWeekendsCheckBox.checkState())
+    days_to_remove = m.DayToRemoveList.findItems("*", PyQt4.QtCore.Qt.MatchWildcard)
 
     print f_to_work
     print f_from_work
@@ -110,6 +118,8 @@ def generateGpx():
     print start_date
     print end_date
     print remove_weekends
+    print("%d days to remove"%len(days_to_remove))
+    print days_to_remove
 
     ok = 0
     ok += check_file(f_to_work)
@@ -149,9 +159,6 @@ def generateGpx():
         add_track(root, tracks[0])
     else:
         print("Input file MUST have only one track! Your file has %d tracks."%nb_tracks)
-
-    #FOR TEST
-    tracks, nb_tracks = get_tracks(root, False)
 
     if same_track:
         # rename the "way back from work" track in from_work
@@ -196,6 +203,7 @@ if __name__ == "__main__":
     # Initialize display fields
     m.StartDateEdit.setDate(date.today())
     m.EndDateEdit.setDate(date.today())
+    m.RemoveDateEdit.setDate(date.today())
     m.statusbar.showMessage("Designed by: mcattin")
     m.ToWorkFileEdit.setText(findFileInCurrentDir("to_work.gpx"))
     m.FromWorkFileEdit.setText(findFileInCurrentDir("from_work.gpx"))
@@ -207,7 +215,9 @@ if __name__ == "__main__":
     m.OutputButton.clicked.connect(selectOutputFile)
     m.GenerateButton.clicked.connect(generateGpx)
     m.SameTrackCheckBox.stateChanged.connect(handleSameTrackClicked)
-    m.AddDayButton.clicked.connect(addDayWidget)
+    m.AddDayButton.clicked.connect(addDayToList)
+    m.ClearListButton.clicked.connect(clearList)
+    
 
     # Starts Qt applic
     app.exec_()

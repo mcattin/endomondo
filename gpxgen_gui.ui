@@ -23,18 +23,18 @@
       <height>27</height>
      </rect>
     </property>
+    <property name="displayFormat">
+     <string>MM-dd-yyyy</string>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
+    </property>
     <property name="date">
      <date>
       <year>2000</year>
       <month>1</month>
       <day>1</day>
      </date>
-    </property>
-    <property name="displayFormat">
-     <string>MM-dd-yyyy</string>
-    </property>
-    <property name="calendarPopup">
-     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="StartDateLabel">
@@ -94,7 +94,7 @@
      <rect>
       <x>60</x>
       <y>20</y>
-      <width>131</width>
+      <width>141</width>
       <height>17</height>
      </rect>
     </property>
@@ -255,7 +255,7 @@
    <widget class="QPushButton" name="AddDayButton">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>420</x>
       <y>260</y>
       <width>88</width>
       <height>27</height>
@@ -265,17 +265,50 @@
      <string>Add a day</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="DaysGroupBox">
+   <widget class="QListWidget" name="DayToRemoveList">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>240</y>
-      <width>241</width>
-      <height>191</height>
+      <x>130</x>
+      <y>250</y>
+      <width>151</width>
+      <height>192</height>
      </rect>
     </property>
-    <property name="title">
-     <string>Days to be removed</string>
+   </widget>
+   <widget class="QDateEdit" name="RemoveDateEdit">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>260</y>
+      <width>110</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="displayFormat">
+     <string>MM-dd-yyyy</string>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
+    </property>
+    <property name="date">
+     <date>
+      <year>2000</year>
+      <month>1</month>
+      <day>1</day>
+     </date>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ClearListButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>410</y>
+      <width>88</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear list</string>
     </property>
    </widget>
   </widget>
