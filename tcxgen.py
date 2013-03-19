@@ -16,8 +16,9 @@ from PyQt4.QtCore import *
 from datetime import *
 import xml.etree.ElementTree as et
 
-from gpxgen_gui_layout import *
+from tcxgen_gui_layout import *
 
+VERSION = "v0.1"
 
 def selectToWorkFile():
     ui.ToWorkFileEdit.setText(QFileDialog.getOpenFileName())
@@ -218,7 +219,8 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(m)
     m.show()
-    m.setWindowTitle("TCXgen")
+    title = "TCXgen - " + VERSION
+    m.setWindowTitle(title)
     m.setFixedSize(661,548)
 
     # Initialize display fields
