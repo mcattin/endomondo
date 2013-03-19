@@ -16,32 +16,27 @@ from PyQt4.QtCore import *
 from datetime import *
 import xml.etree.ElementTree as et
 
-# Constants declaration
-FormClass = PyQt4.uic.loadUiType('gpxgen_gui.ui')[0]
+from gpxgen_gui_layout import *
 
-class MainWindow(QMainWindow, FormClass):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.setupUi(self)
 
 def selectToWorkFile():
-    m.ToWorkFileEdit.setText(QFileDialog.getOpenFileName())
+    ui.ToWorkFileEdit.setText(QFileDialog.getOpenFileName())
 
 def selectFromWorkFile():
-    m.FromWorkFileEdit.setText(QFileDialog.getOpenFileName())
+    ui.FromWorkFileEdit.setText(QFileDialog.getOpenFileName())
 
 def selectOutputFile():
-    m.OutputFileEdit.setText(QFileDialog.getOpenFileName())
+    ui.OutputFileEdit.setText(QFileDialog.getOpenFileName())
 
 def handleSameTrackClicked():
-    if bool(m.SameTrackCheckBox.checkState()):
-        m.FromWorkButton.setEnabled(False)
-        m.FromWorkLabel.setEnabled(False)
-        m.FromWorkFileEdit.setEnabled(False)
+    if bool(ui.SameTrackCheckBox.checkState()):
+        ui.FromWorkButton.setEnabled(False)
+        ui.FromWorkLabel.setEnabled(False)
+        ui.FromWorkFileEdit.setEnabled(False)
     else:
-        m.FromWorkButton.setEnabled(True)
-        m.FromWorkLabel.setEnabled(True)
-        m.FromWorkFileEdit.setEnabled(True)
+        ui.FromWorkButton.setEnabled(True)
+        ui.FromWorkLabel.setEnabled(True)
+        ui.FromWorkFileEdit.setEnabled(True)
 
 def findFileInCurrentDir(f_to_find):
     files = filter(os.path.isfile, os.listdir(os.curdir))
@@ -52,11 +47,11 @@ def findFileInCurrentDir(f_to_find):
     return ""
 
 def addDayToList():
-    date_to_add = m.RemoveDateEdit.date()
-    m.DayToRemoveList.addItem(date_to_add.toString("MM-dd-yyyy"))
+    date_to_add = ui.RemoveDateEdit.date()
+    ui.DayToRemoveList.addItem(date_to_add.toString("MM-dd-yyyy"))
 
 def clearList():
-    m.DayToRemoveList.clear()
+    ui.DayToRemoveList.clear()
 
 def delDay():
     print("Delete Day")
@@ -119,14 +114,14 @@ def check_file(f):
     return ok
 
 def generateGpx():
-    f_to_work = m.ToWorkFileEdit.text()
-    f_from_work = m.FromWorkFileEdit.text()
-    same_track = bool(m.SameTrackCheckBox.checkState())
-    f_out = m.OutputFileEdit.text()
-    start_date = m.StartDateEdit.date()
-    end_date = m.EndDateEdit.date()
-    remove_weekends = bool(m.RemoveWeekendsCheckBox.checkState())
-    days_to_remove = m.DayToRemoveList.findItems("*", PyQt4.QtCore.Qt.MatchWildcard)
+    f_to_work = ui.ToWorkFileEdit.text()
+    f_from_work = ui.FromWorkFileEdit.text()
+    same_track = bool(ui.SameTrackCheckBox.checkState())
+    f_out = ui.OutputFileEdit.text()
+    start_date = ui.StartDateEdit.date()
+    end_date = ui.EndDateEdit.date()
+    remove_weekends = bool(ui.RemoveWeekendsCheckBox.checkState())
+    days_to_remove = ui.DayToRemoveList.findItems("*", PyQt4.QtCore.Qt.MatchWildcard)
 
     print "track to work input file: ",f_to_work
     print "track from work input file: ",f_from_work
@@ -219,29 +214,31 @@ def generateGpx():
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-    m = MainWindow()
+    m = QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(m)
     m.show()
     m.setWindowTitle("TCXgen")
     m.setFixedSize(661,548)
 
     # Initialize display fields
-    m.StartDateEdit.setDate(date.today())
-    m.EndDateEdit.setDate(date.today())
-    m.RemoveDateEdit.setDate(date.today())
-    m.statusbar.showMessage("Designed by: mcattin")
-    m.ToWorkFileEdit.setText(findFileInCurrentDir("to_work.tcx"))
-    m.FromWorkFileEdit.setText(findFileInCurrentDir("from_work.tcx"))
-    m.OutputFileEdit.setText(findFileInCurrentDir("out.tcx"))
+    ui.StartDateEdit.setDate(date.today())
+    ui.EndDateEdit.setDate(date.today())
+    ui.RemoveDateEdit.setDate(date.today())
+    ui.statusbar.showMessage("Designed by: mcattin")
+    ui.ToWorkFileEdit.setText(findFileInCurrentDir("to_work.tcx"))
+    ui.FromWorkFileEdit.setText(findFileInCurrentDir("from_work.tcx"))
+    ui.OutputFileEdit.setText(findFileInCurrentDir("out.tcx"))
     handleSameTrackClicked()
 
     # Connect events to callback functions
-    m.ToWorkButton.clicked.connect(selectToWorkFile)
-    m.FromWorkButton.clicked.connect(selectFromWorkFile)
-    m.OutputButton.clicked.connect(selectOutputFile)
-    m.GenerateButton.clicked.connect(generateGpx)
-    m.SameTrackCheckBox.stateChanged.connect(handleSameTrackClicked)
-    m.AddDayButton.clicked.connect(addDayToList)
-    m.ClearListButton.clicked.connect(clearList)
+    ui.ToWorkButton.clicked.connect(selectToWorkFile)
+    ui.FromWorkButton.clicked.connect(selectFromWorkFile)
+    ui.OutputButton.clicked.connect(selectOutputFile)
+    ui.GenerateButton.clicked.connect(generateGpx)
+    ui.SameTrackCheckBox.stateChanged.connect(handleSameTrackClicked)
+    ui.AddDayButton.clicked.connect(addDayToList)
+    ui.ClearListButton.clicked.connect(clearList)
 
     # Starts Qt applic
     app.exec_()
