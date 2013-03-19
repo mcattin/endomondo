@@ -1,5 +1,5 @@
 # -*- mode: python -*-
-a = Analysis(['gpxgen_gui.py'],
+a = Analysis(['tcxgen.py'],
              pathex=['/home/mcattin/Documents/endomondo'],
              hiddenimports=[],
              hookspath=None)
@@ -9,7 +9,7 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name=os.path.join('dist', 'gpxgen_gui'),
+          name=os.path.join('dist', 'tcxgen'),
           debug=True,
           strip=None,
           upx=True,
