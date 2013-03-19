@@ -2,17 +2,9 @@
 #    coding: utf8
 
 import sys
-import time
 import os
-import math
 
-import PyQt4
-import PyQt4.QtGui
-import PyQt4.QtCore
-import PyQt4.uic
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
-
+from PyQt4 import QtGui, QtCore
 from datetime import *
 import xml.etree.ElementTree as et
 
@@ -21,13 +13,13 @@ from tcxgen_gui_layout import *
 VERSION = "v0.1"
 
 def selectToWorkFile():
-    ui.ToWorkFileEdit.setText(QFileDialog.getOpenFileName())
+    ui.ToWorkFileEdit.setText(QtGui.QFileDialog.getOpenFileName())
 
 def selectFromWorkFile():
-    ui.FromWorkFileEdit.setText(QFileDialog.getOpenFileName())
+    ui.FromWorkFileEdit.setText(QtGui.QFileDialog.getOpenFileName())
 
 def selectOutputFile():
-    ui.OutputFileEdit.setText(QFileDialog.getOpenFileName())
+    ui.OutputFileEdit.setText(QtGui.QFileDialog.getOpenFileName())
 
 def handleSameTrackClicked():
     if bool(ui.SameTrackCheckBox.checkState()):
@@ -110,7 +102,7 @@ def check_file(f):
     ok = 0
     if f == "" or f[-4:] != ".tcx":
         print("Enter a .tcx file")
-        QMessageBox.warning(m, 'Message Title', 'Please enter a .tcx file', QMessageBox.Ok)
+        QtGui.QMessageBox.warning(m, 'Message Title', 'Please enter a .tcx file', QtGui.QMessageBox.Ok)
         ok = -1
     return ok
 
@@ -122,7 +114,7 @@ def generateGpx():
     start_date = ui.StartDateEdit.date()
     end_date = ui.EndDateEdit.date()
     remove_weekends = bool(ui.RemoveWeekendsCheckBox.checkState())
-    days_to_remove = ui.DayToRemoveList.findItems("*", PyQt4.QtCore.Qt.MatchWildcard)
+    days_to_remove = ui.DayToRemoveList.findItems("*", QtCore.Qt.MatchWildcard)
 
     print "track to work input file: ",f_to_work
     print "track from work input file: ",f_from_work
@@ -214,8 +206,8 @@ def generateGpx():
 
 if __name__ == "__main__":
 
-    app = QApplication(sys.argv)
-    m = QMainWindow()
+    app = QtGui.QApplication(sys.argv)
+    m = QtGui.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(m)
     m.show()
