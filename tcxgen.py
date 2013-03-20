@@ -102,11 +102,11 @@ def check_file(f):
     ok = 0
     if f == "" or f[-4:] != ".tcx":
         print("Enter a .tcx file")
-        QtGui.QMessageBox.warning(m, 'Message Title', 'Please enter a .tcx file', QtGui.QMessageBox.Ok)
+        QtGui.QMessageBox.warning(m, 'Warning', 'Please enter a .tcx file', QtGui.QMessageBox.Ok)
         ok = -1
     return ok
 
-def generateGpx():
+def generateTcx():
     f_to_work = ui.ToWorkFileEdit.text()
     f_from_work = ui.FromWorkFileEdit.text()
     same_track = bool(ui.SameTrackCheckBox.checkState())
@@ -202,6 +202,7 @@ def generateGpx():
     tree.write(f_out, xml_declaration=True, encoding='utf-8')
 
     print("Output file generated!")
+    QtGui.QMessageBox.information(m, 'Generate', 'Output file has been generated.', QtGui.QMessageBox.Ok)
 
 
 if __name__ == "__main__":
@@ -229,7 +230,7 @@ if __name__ == "__main__":
     ui.ToWorkButton.clicked.connect(selectToWorkFile)
     ui.FromWorkButton.clicked.connect(selectFromWorkFile)
     ui.OutputButton.clicked.connect(selectOutputFile)
-    ui.GenerateButton.clicked.connect(generateGpx)
+    ui.GenerateButton.clicked.connect(generateTcx)
     ui.SameTrackCheckBox.stateChanged.connect(handleSameTrackClicked)
     ui.AddDayButton.clicked.connect(addDayToList)
     ui.ClearListButton.clicked.connect(clearList)
