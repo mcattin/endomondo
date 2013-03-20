@@ -166,9 +166,9 @@ class Ui_MainWindow(object):
         self.RemoveDateEdit.setDisplayFormat(QtGui.QApplication.translate("MainWindow", "MM-dd-yyyy", None, QtGui.QApplication.UnicodeUTF8))
         self.ClearListButton.setText(QtGui.QApplication.translate("MainWindow", "Clear list", None, QtGui.QApplication.UnicodeUTF8))
         self.GenerateButton.setText(QtGui.QApplication.translate("MainWindow", "Generate", None, QtGui.QApplication.UnicodeUTF8))
-        self.ToWorkLabel.setText(QtGui.QApplication.translate("MainWindow", "Track to work (.gpx):", None, QtGui.QApplication.UnicodeUTF8))
+        self.ToWorkLabel.setText(QtGui.QApplication.translate("MainWindow", "Track to work (.tcx):", None, QtGui.QApplication.UnicodeUTF8))
         self.ToWorkButton.setText(QtGui.QApplication.translate("MainWindow", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.FromWorkLabel.setText(QtGui.QApplication.translate("MainWindow", "Track from work (.gpx):", None, QtGui.QApplication.UnicodeUTF8))
+        self.FromWorkLabel.setText(QtGui.QApplication.translate("MainWindow", "Track from work (.tcx):", None, QtGui.QApplication.UnicodeUTF8))
         self.FromWorkButton.setText(QtGui.QApplication.translate("MainWindow", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.StartDateLabel.setText(QtGui.QApplication.translate("MainWindow", "Start date:", None, QtGui.QApplication.UnicodeUTF8))
         self.StartDateEdit.setDisplayFormat(QtGui.QApplication.translate("MainWindow", "MM-dd-yyyy", None, QtGui.QApplication.UnicodeUTF8))
@@ -176,7 +176,7 @@ class Ui_MainWindow(object):
         self.EndDateEdit.setDisplayFormat(QtGui.QApplication.translate("MainWindow", "MM-dd-yyyy", None, QtGui.QApplication.UnicodeUTF8))
         self.RemoveDayLabel.setText(QtGui.QApplication.translate("MainWindow", "Day(s) to remove from the selected period:", None, QtGui.QApplication.UnicodeUTF8))
         self.RemoveWeekendsCheckBox.setText(QtGui.QApplication.translate("MainWindow", "Remove weekends", None, QtGui.QApplication.UnicodeUTF8))
-        self.OutputLabel.setText(QtGui.QApplication.translate("MainWindow", "Output file name:", None, QtGui.QApplication.UnicodeUTF8))
+        self.OutputLabel.setText(QtGui.QApplication.translate("MainWindow", "Output file name (.tcx):", None, QtGui.QApplication.UnicodeUTF8))
         self.OutputButton.setText(QtGui.QApplication.translate("MainWindow", "...", None, QtGui.QApplication.UnicodeUTF8))
 
 

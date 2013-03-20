@@ -178,7 +178,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Track to work (.gpx):</string>
+        <string>Track to work (.tcx):</string>
        </property>
       </widget>
      </item>
@@ -219,7 +219,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Track from work (.gpx):</string>
+        <string>Track from work (.tcx):</string>
        </property>
       </widget>
      </item>
@@ -368,7 +368,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Output file name:</string>
+        <string>Output file name (.tcx):</string>
        </property>
       </widget>
      </item>

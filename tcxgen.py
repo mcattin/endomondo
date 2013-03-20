@@ -10,7 +10,7 @@ import xml.etree.ElementTree as et
 
 from tcxgen_gui_layout import *
 
-VERSION = "v0.1"
+VERSION = "v0.2"
 
 def selectToWorkFile():
     ui.ToWorkFileEdit.setText(QtGui.QFileDialog.getOpenFileName())
